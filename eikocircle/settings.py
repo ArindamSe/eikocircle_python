@@ -35,10 +35,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_rest_passwordreset',
     
-    'Common',
-    'authentication',
-    'transaction',
-    
 ]
 
 MIDDLEWARE = [
