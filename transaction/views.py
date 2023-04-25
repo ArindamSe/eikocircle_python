@@ -1,3 +1,18 @@
-from django.shortcuts import render
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_tracking.models import APIRequestLog
 
-# Create your views here.
+from transaction.serializers import TransactionsSerializer
+
+
+class ListTransactionsView(APIView):
+    serializer_class = TransactionsSerializer
+    model = APIRequestLog
+
+    def get_queryset(self):
+        return self.model.objects.all()
+
+    def get(self, *args, **kwargs):
+        transactions = self.serializer_class(instance=self.get_queryset(), many=True)
+        return Response(transactions.data, status=status.HTTP_200_OK)
