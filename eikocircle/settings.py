@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     
     'rest_framework',
     
+    'Common',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +49,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'eikocircle.urls'
+AUTH_USER_MODEL = 'authentication.User'
 
 TEMPLATES = [
     {
