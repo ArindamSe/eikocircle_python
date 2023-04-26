@@ -42,7 +42,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = [
             'username', 'password', 'password2', 'email',
             'first_name', 'last_name', 'mobile', 'company_name',
-            'address', 'brand_name',
+            'address', 'brand_name', 'role',
         ]
         extra_kwargs = {
             'first_name' : {'required': True},
@@ -87,7 +87,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             first_name= validated_data['first_name'],
             last_name= validated_data['last_name'],
             mobile= validated_data['mobile'],
-            #role= validated_data['role'],
+            role= validated_data['role'],
             company_name= validated_data['company_name'],
             address= validated_data['address'],
             brand_name= validated_data['brand_name']
