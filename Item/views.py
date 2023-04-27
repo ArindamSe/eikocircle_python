@@ -8,7 +8,7 @@ from rest_framework_tracking.mixins import LoggingMixin
 from Item.models import Item, ItemMaterialRecoveryReport, ItemProofOfDelivery, ItemRecyclingCertificate, ItemSalePurchaseInvoice
 from Item.serializers import ItemSerializer
 
-class ItemViewSet(ViewSet):
+class ItemViewSet(LoggingMixin, ViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = ItemSerializer
     
@@ -56,13 +56,14 @@ class ItemViewSet(ViewSet):
             'recyclingcertificate': recycling
         }
         
-        data = ItemSerializer(data, context=context)
+        data = ItemSerializer(data=data, context=context)
         data.is_valid(raise_exception=True)
         data.save()
         response = {
-            "message": f"Successfully created Item with code {data['item_code']}",
+            "message": f"Successfully created Item",
             "data": data.data
         }
+        return Response(response, status=status.HTTP_200_OK)
         
     def update(self, request, *args, **kwargs):
         item = self.get_object(kwargs.pop('pk'))
@@ -87,7 +88,7 @@ class ItemViewSet(ViewSet):
         data.is_valid(raise_exception=True)
         data.save()
         response = {
-            "message": f"Successfully updated the Item with code {data['item_code']}",
+            "message": f"Successfully updated the Item",
             "data": data.data
         }
         return Response(response, status=status.HTTP_201_CREATED)
@@ -115,7 +116,7 @@ class ItemViewSet(ViewSet):
         data.is_valid(raise_exception=True)
         data.save()
         response = {
-            "message": f"Successfully updated the Item with code {data['item_code']}",
+            "message": f"Successfully updated the Item",
             "data": data.data
         }
         return Response(response, status=status.HTTP_201_CREATED)
