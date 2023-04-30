@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'Common',
     'authentication',
     'Item',
+    'product',
 ]
 
 MIDDLEWARE = [
