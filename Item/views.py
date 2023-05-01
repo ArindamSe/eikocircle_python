@@ -24,18 +24,20 @@ class ItemViewSet(LoggingMixin, ViewSet):
         data =  self.get_queryset()
         
         response = {
-            'date': self.serializer_class(data, many=True).data
+            'status': 'success',
+            'data': self.serializer_class(data, many=True).data,
+            'message': "item listed successfully"
         }
         
         return Response(response, status=status.HTTP_200_OK)
     
-    def retrieve(self, *args, **kwargs):
-        pk = kwargs.pop('pk')
-        
+    def retrieve(self, request, pk=None):
+        item = self.get_object(pk)
+        serializer = ItemSerializer(item)
         response = {
-            'data': self.serializer_class(self.get_object(pk))
+            'status': 'success',
+            'data': serializer.data
         }
-        
         return Response(response, status=status.HTTP_200_OK)
     
     def create(self, request):
