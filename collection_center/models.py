@@ -13,7 +13,7 @@ class CollectionCenter(Common):
     
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200, null=True, blank=True)
-    number = models.IntegerField(null=True, blank=True)
+    number = models.CharField(max_length=10, blank=True, null=True)
     medium = models.CharField(max_length=50, choices=Medium, default='bulk_consumer')
     city = models.CharField(max_length=50, null=True, blank=True)
     

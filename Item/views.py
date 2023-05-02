@@ -43,6 +43,7 @@ class ItemViewSet(LoggingMixin, ViewSet):
     def create(self, request):
         data = {
             'item_code': request.data.get('item_code'),
+            'target': request.data.get('target'),
             'created_by': request.user.id,
         }
         
@@ -71,6 +72,7 @@ class ItemViewSet(LoggingMixin, ViewSet):
         item = self.get_object(kwargs.pop('pk'))
         data = {
             'item_code': request.data.get('item_code', item.item_code),
+            'target': request.data.get('target', item.target),
             'updated_by': request.user.id,
         }
         
@@ -99,6 +101,7 @@ class ItemViewSet(LoggingMixin, ViewSet):
         item = self.get_object(kwargs.pop('pk'))
         data = {
             'item_code': request.data.get('item_code', item.item_code),
+            'target': request.data.get('target', item.target),
             'updated_by': request.user.id,
         }
         

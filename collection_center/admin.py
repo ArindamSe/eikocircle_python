@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from collection_center.models import CollectionCenter, CollectedCenterItemCollected
+
+admin.site.register(CollectionCenter)
+admin.site.register(CollectedCenterItemCollected)

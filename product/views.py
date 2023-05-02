@@ -29,7 +29,7 @@ class ProductViewSet(LoggingMixin, ViewSet):
             response.append({
                 'id': i['id'],
                 'name': i['name'],
-                'target': i['target'],
+                'target': i['item']['target'],
                 'item': i['item']["item_code"] })
         
         return Response(response, status=status.HTTP_200_OK)
@@ -47,7 +47,6 @@ class ProductViewSet(LoggingMixin, ViewSet):
         data = {
             'item': request.data.get('item'),
             'name': request.data.get('name'),
-            'target': request.data.get('target'),
             'created_by': request.user.id,
         }
         
@@ -67,7 +66,6 @@ class ProductViewSet(LoggingMixin, ViewSet):
         data = {
             'item': request.data.get('item'),
             'name': request.data.get('name'),
-            'target': request.data.get('target'),
             'updated_by': request.user.id,
         }
         
@@ -87,7 +85,6 @@ class ProductViewSet(LoggingMixin, ViewSet):
         data = {
             'item': request.data.get('item'),
             'name': request.data.get('name'),
-            'target': request.data.get('target'),
             'updated_by': request.user.id,
         }
         
@@ -104,9 +101,10 @@ class ProductViewSet(LoggingMixin, ViewSet):
     def destroy(self, request, *args, **kwargs):
         id=kwargs.pop('pk')
         item = self.get_object(id)
+        item_name = item['name']
         item.delete()
         response= {
             'data': '',
-            'message': "Successfully deleted Product"
+            'message': f"Successfully deleted Product name {item_name}"
         }
         return Response(response, status=status.HTTP_204_NO_CONTENT)

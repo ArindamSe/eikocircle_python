@@ -5,7 +5,7 @@ from Item.models import Item, ItemMaterialRecoveryReport, ItemProofOfDelivery, I
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ['id', 'item_code', 'created_by', 'updated_by']
+        fields = ['id', 'item_code', 'target', 'created_by', 'updated_by']
         
         extra_kwargs = {
             'created_by': {'write_only': True},
