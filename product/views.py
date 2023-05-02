@@ -23,9 +23,14 @@ class ProductViewSet(LoggingMixin, ViewSet):
     def list(self, request, *args, **kwargs):
         data = self.get_queryset()
         
-        response = {
-            'date': ProductSerialzerView(data, many=True).data
-        }
+        data = ProductSerialzerView(data, many=True).data
+        response = []
+        for i in data:
+            response.append({
+                'id': i['id'],
+                'name': i['name'],
+                'target': i['target'],
+                'item': i['item']["item_code"] })
         
         return Response(response, status=status.HTTP_200_OK)
     
@@ -42,6 +47,7 @@ class ProductViewSet(LoggingMixin, ViewSet):
         data = {
             'item': request.data.get('item'),
             'name': request.data.get('name'),
+            'target': request.data.get('target'),
             'created_by': request.user.id,
         }
         
@@ -61,6 +67,7 @@ class ProductViewSet(LoggingMixin, ViewSet):
         data = {
             'item': request.data.get('item'),
             'name': request.data.get('name'),
+            'target': request.data.get('target'),
             'updated_by': request.user.id,
         }
         
@@ -80,6 +87,7 @@ class ProductViewSet(LoggingMixin, ViewSet):
         data = {
             'item': request.data.get('item'),
             'name': request.data.get('name'),
+            'target': request.data.get('target'),
             'updated_by': request.user.id,
         }
         

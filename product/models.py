@@ -6,6 +6,7 @@ from Item.models import Item
 class Product(Common):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+    target = models.IntegerField(null=True, blank=True)
     
     class Meta:
         db_table = "Product Category"
