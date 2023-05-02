@@ -4,6 +4,7 @@ from Common.models import Common
 
 class Item(Common):
     item_code = models.CharField(max_length=100)
+    target = models.IntegerField(null=True, blank=True)
     
     class Meta:
         db_table = "Item"

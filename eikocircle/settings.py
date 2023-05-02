@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'Item',
     'product',
     'transaction',
+    'collection_center',
+    'Item_collected',
 ]
 
 MIDDLEWARE = [
