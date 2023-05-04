@@ -17,6 +17,6 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     send_email(
         template_name="forgot_password_email.txt",
         data=data,
-        subject="Password Reset for Eikomp",
+        subject="Password Reset for Eikocircle",
         to=[reset_password_token.user.email]
     )
