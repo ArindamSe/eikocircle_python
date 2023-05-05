@@ -7,6 +7,12 @@ class ItemCollected(Common):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     weight = models.IntegerField()
     
+    class Meta:
+        db_table = "ItemCollected"
+        
+    def __str__(self):
+        return f"{self.product}-{self.weight}"
+    
     
 class ItemCollectedPictures(Common):
     item_collected = models.ForeignKey(ItemCollected, on_delete=models.CASCADE)
