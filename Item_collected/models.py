@@ -11,7 +11,7 @@ class ItemCollected(Common):
         db_table = "ItemCollected"
         
     def __str__(self):
-        return f"{self.product}-{self.weight}"
+        return f"{self.product.item}-{self.product}-{self.weight}"
     
     
 class ItemCollectedPictures(Common):

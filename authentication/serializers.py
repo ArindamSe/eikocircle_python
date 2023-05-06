@@ -54,7 +54,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         
     def to_internal_value(self, data):
         brand_name = data.get('brand_name')
-        if not Brands.objects.filter(name=brand_name).exists():
+        if not Brands.objects.filter(name__icontains=brand_name).exists():
             name = Brands.objects.create(name= brand_name)
             name.save()
             
