@@ -26,4 +26,5 @@ urlpatterns = [
     path('item-collected/', include('Item_collected.urls')),
     path('brand-product/', include('brand_product.urls')),
     path('recycling-center/', include('recycling_center.urls')),
+    path('transaction/', include('transaction.urls')),
 ]
