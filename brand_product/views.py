@@ -21,7 +21,7 @@ class BrandProductViewSet(LoggingMixin, ViewSet):
     @staticmethod
     def get_queryset(brand=None):
         if brand:
-            data = Brand_product.objects.filter(brand__name__icontains=brand)
+            data = Brand_product.objects.filter(brand__id__icontains=brand)
             return data
         return Brand_product.objects.all()
     
