@@ -22,7 +22,6 @@ class CollectionCenterViewSet(LoggingMixin, ViewSet):
     
     def list(self, request, *args, **kwargs):
         data = self.get_queryset()
-        print(data)
         response  = {
             'message': 'All details are listed',
             'data': self.serializer_class(data, many=True).data

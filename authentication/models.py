@@ -18,10 +18,10 @@ class User(AbstractUser, Common):
     ROLES = (
         ('brand', 'Brand'),
         ('refurbisher', 'Refurbisher'),
-        ('collection_center', 'Collection_Center'),
-        ('recycling_unit', 'Recycling_Unit'),
-        ('individual_consumer', 'Individual_Consumer'),
-        ('bulk_consumer', 'Bulk_Consumer')
+        ('collection_center', 'Collection Center'),
+        ('recycling_unit', 'Recycling Unit'),
+        ('individual_consumer', 'Individual Consumer'),
+        ('bulk_consumer', 'Bulk Consumer')
     )
     
     role = models.CharField(max_length=20, choices=ROLES, default='brand')
