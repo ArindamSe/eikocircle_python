@@ -123,18 +123,20 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
         return ItemRecycled.objects.all()
     
     def list(self, request, *args, **kwargs):
-        product,city,period = request.query_params.get("product"), request.query_params.get('city'), request.query_params.get('period')
+        product, city, period, brand = request.query_params.get("product"), request.query_params.get('city'), request.query_params.get('period'), request.query_params.get('brand')
         filters = []
         if product:
             filters.append(Q(item_collected__product__name__icontains=product))
         if city:
             filters.append(Q(recyclingcenter__city__icontains=city))
+        if brand:
+            filters.append(Q(brand__brand__id=brand))
         if period:
             date = datetime.now() - timedelta(days=int(period))
             filters.append(Q(created_at__gte=date))
         
         data = self.get_queryset()
-        if product or city or period:
+        if product or city or period or brand:
             item = ItemRecycled.objects.filter(*filters)
             data = [obj for obj in item]
 
@@ -146,7 +148,9 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
             response.append({
                 'id': i['id'],
                 'reyclingcenter': i['recyclingcenter']['name'],
+                'address': i['recyclingcenter']['address'],
                 'product': i['product']['name'],
+                'brand': i['brand'],
                 'target': i['target'],
                 'recycled': i['recycled'],
             })
@@ -160,7 +164,9 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
         response = {
             'id': serializer.data['id'],
             'reyclingcenter': serializer.data['recyclingcenter']['name'],
+            'address': serializer.data['recyclingcenter']['address'],
             'product': serializer.data['product']['name'],
+            'brand': serializer.data['brand'],
             'target': serializer.data['target'],
             'recycled': serializer.data['recycled'],
         }
@@ -170,6 +176,7 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
     def create(self, request):
         data = {
             'recyclingcenter': request.data.get('recyclingcenter'),
+            'brand': request.data.get('brand'),
             'product': request.data.get('product'),
             'target': request.data.get('target'),
             'recycled': request.data.get('recycled'),
@@ -194,6 +201,7 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
             'product': request.data.get('product', itemrecycled.product),
             'target': request.data.get('target', itemrecycled.target),
             'recycled': request.data.get('recycled', itemrecycled.recycled),
+            'brand': request.data.get('brand', itemrecycled.brand),
             'created_by': request.user.id,
         }
         
@@ -215,6 +223,7 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
             'product': request.data.get('product', itemrecycled.product),
             'target': request.data.get('target', itemrecycled.target),
             'recycled': request.data.get('recycled', itemrecycled.recycled),
+            'brand': request.data.get('brand', itemrecycled.brand),
             'created_by': request.user.id,
         }
         

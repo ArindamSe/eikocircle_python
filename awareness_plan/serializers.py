@@ -5,13 +5,13 @@ from awareness_plan.models import AwarenessPlan, AwarenessPlanPics
 class AwarenessPlanListSerializer(serializers.ModelSerializer):
     class Meta:
         model = AwarenessPlan
-        fields = ['id', 'product', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience']
+        fields = ['id', 'product', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience', 'brand']
         depth = 2
         
 class AwarenessPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = AwarenessPlan
-        fields = ['id', 'product', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience', 'created_by', 'updated_by']
+        fields = ['id', 'product', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience', 'brand', 'created_by', 'updated_by']
         
         extra_kwargs = {
             'created_by': {'write_only': True},
@@ -29,3 +29,19 @@ class AwarenessPlanSerializer(serializers.ModelSerializer):
             AwarenessPlan.objects.bulk_create(files)
         
         return awarenessplan
+    
+class AwarenessPlanPicsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AwarenessPlanPics
+        fields = ['id', 'awarenessplan', 'pics', 'created_by', 'updated_by']
+
+        extra_kwargs = {
+            'created_by': {'write_only': True},
+            'updated_by': {'write_only': True},
+        }
+        
+class AwarenessPlanPicsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AwarenessPlanPics
+        fields = '__all__'
+        depth = 3

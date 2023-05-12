@@ -15,7 +15,7 @@ class RecyclingCenterSerializer(serializers.ModelSerializer):
 class ItemRecycledSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemRecycled
-        fields = ['id', 'product', 'recyclingcenter', 'target', 'recycled', 'updated_by', 'created_by']
+        fields = ['id', 'product', 'recyclingcenter', 'target', 'recycled', 'brand', 'updated_by', 'created_by']
         
         extra_kwargs = {
             'created_by': {'write_only': True},
@@ -25,5 +25,5 @@ class ItemRecycledSerializer(serializers.ModelSerializer):
 class ItemRecycledListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemRecycled
-        fields = ['id', 'product', 'recyclingcenter', 'target', 'recycled']
+        fields = ['id', 'product', 'recyclingcenter', 'target', 'recycled', 'brand']
         depth = 1

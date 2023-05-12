@@ -43,6 +43,8 @@ class ItemCollectedViewSet(LoggingMixin, ViewSet):
         data = {
             'product': request.data.get('product'),
             'weight': request.data.get('weight'),
+            'brand': request.data.get('brand'),
+            'target': request.data.get('target'),
             'created_by': request.user.id,
         }
         
@@ -68,6 +70,8 @@ class ItemCollectedViewSet(LoggingMixin, ViewSet):
         data = {
             'product': request.data.get('product', itemcollected.product),
             'weight': request.data.get('weight', itemcollected.weight),
+            'brand': request.data.get('brand', itemcollected.brand),
+            'target': request.data.get('target', itemcollected.target),
             'updated_by': request.user.id,
         }
         
@@ -93,6 +97,8 @@ class ItemCollectedViewSet(LoggingMixin, ViewSet):
         data = {
             'product': request.data.get('product', itemcollected.product),
             'weight': request.data.get('weight', itemcollected.weight),
+            'brand': request.data.get('brand', itemcollected.brand),
+            'target': request.data.get('target', itemcollected.target),
             'updated_by': request.user.id,
         }
         

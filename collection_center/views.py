@@ -153,17 +153,19 @@ class CollectedCenterItemCollectedViewSet(LoggingMixin, ViewSet):
         return CollectedCenterItemCollected.objects.all()
     
     def list(self, request, *args, **kwargs):
-        product,city,period = request.query_params.get("product"), request.query_params.get('city'), request.query_params.get('period')
+        product, city, period, brand = request.query_params.get("product"), request.query_params.get('city'), request.query_params.get('period'), request.query_params.get('brand')
         filters = []
         if product:
             filters.append(Q(item_collected__product__name__icontains=product))
+        if brand:
+            filters.append(Q(item_collected__brand__brand__id=brand))
         if city:
             filters.append(Q(collection_center__city__icontains=city))
         if period:
             date = datetime.now() - timedelta(days=int(period))
             filters.append(Q(created_at__gte=date))
         data = self.get_queryset()
-        if product or city or period:
+        if product or city or period or brand:
             item = CollectedCenterItemCollected.objects.filter(*filters)
             data = [obj for obj in item]
         data = self.serializer_class(data, many=True).data
@@ -174,7 +176,8 @@ class CollectedCenterItemCollectedViewSet(LoggingMixin, ViewSet):
                 'collection_center': i['collection_center']['name'],
                 'medium': i['collection_center']['medium'],
                 'city': i['collection_center']['city'],
-                'quantity': i['item_collected']['weight']
+                'target': i['item_collected']['target'],
+                'collected': i['item_collected']['weight']
             })
         return Response(response, status=status.HTTP_200_OK)
     
@@ -186,7 +189,8 @@ class CollectedCenterItemCollectedViewSet(LoggingMixin, ViewSet):
             'collection_center': data['collection_center']['name'],
             'medium': data['collection_center']['medium'],
             'city': data['collection_center']['city'],
-            'quantity': data['item_collected']['weight']
+            'target': data['item_collected']['target'],
+            'collected': data['item_collected']['weight']
         }
         
         return Response(response, status=status.HTTP_200_OK)

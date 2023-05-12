@@ -5,13 +5,13 @@ from Item_collected.models import ItemCollected, ItemCollectedPictures
 class ItemCollectedListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemCollected
-        fields = ['id', 'product', 'weight']
+        fields = ['id', 'product', 'weight', 'brand', 'target']
         depth = 1
         
 class ItemCollectedSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemCollected
-        fields = ['id', 'product', 'weight', 'created_by', 'updated_by']
+        fields = ['id', 'product', 'weight', 'brand', 'target', 'created_by', 'updated_by']
         
         extra_kwargs = {
             'created_by': {'write_only': True},

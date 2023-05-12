@@ -6,7 +6,7 @@ class AwarenessPlanMetricsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = AwarenessPlanMetrics
         fields = ['id', 'awarenessplan', 'name', 'proposed', 'impacted']
-        depth = 1
+        depth = 2
         
 class AwarenessPlanMetricsSerializer(serializers.ModelSerializer):
     class Meta:

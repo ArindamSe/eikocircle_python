@@ -1,10 +1,8 @@
 from django.db import models
-from django.utils import timezone
 
 from Common.models import Common
 from product.models import Product
-
-from datetime import date
+from brand_product.models import Brand_product
 
 class AwarenessPlan(Common):
     Medium = (
@@ -25,6 +23,7 @@ class AwarenessPlan(Common):
     date = models.DateField(null=True, blank=True)
     communication = models.TextField(null=True, blank=True)
     target_audience = models.IntegerField(null=True, blank=True)
+    brand = models.ForeignKey(Brand_product, null=True, blank=True, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "Awareness Plan"
