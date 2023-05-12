@@ -2,10 +2,13 @@ from django.db import models
 
 from Common.models import Common
 from product.models import Product
+from brand_product.models import Brand_product
 
 class ItemCollected(Common):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    weight = models.IntegerField()
+    brand = models.ForeignKey(Brand_product, on_delete=models.CASCADE)
+    target = models.IntegerField(null=True, blank=True)
+    weight = models.IntegerField(null=True, blank=True)
     
     class Meta:
         db_table = "ItemCollected"

@@ -25,3 +25,9 @@ class CollectionCenterSerializer(serializers.ModelSerializer):
             CollectedCenterItemCollected.objects.bulk_create(colletectioncenteritemcollected)
             
         return collection_center
+    
+class CollectedCenterItemCollectedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CollectedCenterItemCollected
+        fields = '__all__'
+        depth = 1

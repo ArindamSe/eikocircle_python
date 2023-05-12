@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -8,6 +9,7 @@ from rest_framework_tracking.mixins import LoggingMixin
 from recycling_center.models import RecyclingCenter, ItemRecycled
 from recycling_center.serializers import RecyclingCenterSerializer, ItemRecycledSerializer, ItemRecycledListSerializer
 
+from datetime import datetime, timedelta
 class RecyclingCenterViewSet(LoggingMixin, ViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = RecyclingCenterSerializer
@@ -121,7 +123,20 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
         return ItemRecycled.objects.all()
     
     def list(self, request, *args, **kwargs):
+        product,city,period = request.query_params.get("product"), request.query_params.get('city'), request.query_params.get('period')
+        filters = []
+        if product:
+            filters.append(Q(item_collected__product__name__icontains=product))
+        if city:
+            filters.append(Q(recyclingcenter__city__icontains=city))
+        if period:
+            date = datetime.now() - timedelta(days=int(period))
+            filters.append(Q(created_at__gte=date))
+        
         data = self.get_queryset()
+        if product or city or period:
+            item = ItemRecycled.objects.filter(*filters)
+            data = [obj for obj in item]
 
         serializer = ItemRecycledListSerializer(data, many=True)
         
