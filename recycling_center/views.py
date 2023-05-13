@@ -126,7 +126,7 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
         product, city, period, brand = request.query_params.get("product"), request.query_params.get('city'), request.query_params.get('period'), request.query_params.get('brand')
         filters = []
         if product:
-            filters.append(Q(item_collected__product__name__icontains=product))
+            filters.append(Q(product__name__icontains=product))
         if city:
             filters.append(Q(recyclingcenter__city__icontains=city))
         if brand:

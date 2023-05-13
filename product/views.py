@@ -101,7 +101,6 @@ class ProductViewSet(LoggingMixin, ViewSet):
     def destroy(self, request, *args, **kwargs):
         id=kwargs.pop('pk')
         item = self.get_object(id)
-        item_name = item['name']
         item.delete()
         response= {
             'data': '',
