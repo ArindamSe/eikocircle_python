@@ -22,14 +22,16 @@ class AwarenessPlanMetricsViewSet(LoggingMixin, ViewSet):
         return AwarenessPlanMetrics.objects.all()
     
     def list(self, request, *args, **kwargs):
-        product, city = request.query_params.get("product"), request.query_params.get("city")
+        product, city, brand = request.query_params.get("product"), request.query_params.get("city"), request.query_params.get("brand")
         filters = []
         if product:
             filters.append(Q(awarenessplan__product__name__icontains=product))
         if city:
             filters.append(Q(awarenessplan__city__icontains=city))
+        if brand:
+            filters.append(Q(awarenessplan__brand__brand__id=brand))
         data = self.get_queryset()
-        if product or city:
+        if product or city or brand:
             item = AwarenessPlanMetrics.objects.filter(*filters)
             data = [obj for obj in item]
         serializer =  AwarenessPlanMetricsListSerializer(data, many=True).data
