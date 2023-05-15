@@ -1,9 +1,16 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+
+from multiselectfield import MultiSelectField
 
 from Common.models import Common
 from product.models import Product
 from brand_product.models import Brand_product
 
+def validate_medium_count(value):
+    max_choices = 8
+    if len(value) > max_choices:
+        raise ValidationError(f"Please select a maximum of {max_choices} choices.")
 class AwarenessPlan(Common):
     Medium = (
         ('school_program', 'School Program'),
@@ -18,7 +25,7 @@ class AwarenessPlan(Common):
     
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     theme = models.CharField(max_length=200, null=True, blank=True)
-    medium = models.CharField(max_length=50, choices=Medium, default="online_campaigns")
+    medium = MultiSelectField(choices=Medium, validators=[validate_medium_count], default=["online_campaigns"])
     city = models.CharField(max_length=30, null=True, blank=True)
     date = models.DateField(null=True, blank=True)
     communication = models.TextField(null=True, blank=True)
