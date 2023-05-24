@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'recycling_center',
     'awareness_plan',
     'awareness_plan_metrics',
+    'repair_shop'
 ]
 
 MIDDLEWARE = [
