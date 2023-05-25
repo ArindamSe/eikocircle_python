@@ -27,7 +27,7 @@ class AwarenessPlanListSerializer(serializers.ModelSerializer):
     class Meta:
         model = AwarenessPlan
         fields = ['id', 'product', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience', 'brand', 'pics', 'metrics']
-        depth = 2
+        
 class AwarenessPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = AwarenessPlan
