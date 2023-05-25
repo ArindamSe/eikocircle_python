@@ -2,11 +2,19 @@ from rest_framework import serializers
 
 from Item_collected.models import ItemCollected, ItemCollectedPictures
 
+class ItemCollectedPictiresSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemCollectedPictures
+        fields = "__all__"
 class ItemCollectedListSerializer(serializers.ModelSerializer):
+    picture = serializers.SerializerMethodField()
+    
+    def get_picture(self, obj):
+        data = ItemCollectedPictures.objects.filter(item_collected=obj)
+        return ItemCollectedPictiresSerializer(data, many=True).data
     class Meta:
         model = ItemCollected
-        fields = ['id', 'product', 'weight', 'brand', 'target']
-        depth = 1
+        fields = ['id', 'product', 'weight', 'brand', 'target', 'picture']
         
 class ItemCollectedSerializer(serializers.ModelSerializer):
     class Meta:

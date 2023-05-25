@@ -44,7 +44,6 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
         for i in serializer:
             response.append({
                 'id': i['id'],
-                'product': i['product']['name'],
                 'theme': i['theme'],
                 'medium': i['medium'],
                 'city': i['city'],
@@ -63,7 +62,6 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
         serializer = AwarenessPlanListSerializer(self.get_object(pk)).data
         response = {
                 'id': serializer['id'],
-                'product': serializer['product']['name'],
                 'theme': serializer['theme'],
                 'medium': serializer['medium'],
                 'city': serializer['city'],

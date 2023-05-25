@@ -26,7 +26,7 @@ class ItemCollectedViewSet(LoggingMixin, ViewSet):
         data = self.get_queryset()
         
         response =  {
-            'data': self.serializer_class(data, many=True).data
+            'data': ItemCollectedListSerializer(data, many=True).data
         }
 
         return Response(response, status=status.HTTP_200_OK)
