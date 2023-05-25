@@ -68,7 +68,7 @@ class RecyclingCenterViewSet(LoggingMixin, ViewSet):
             'updated_by': request.user.id,
         }
         
-        data = self.serializer_class(data=data, instance=recyclingcenter,)
+        data = self.serializer_class(data=data, instance=recyclingcenter)
         data.is_valid(raise_exception=True)
         data.save()
         response =  {

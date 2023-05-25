@@ -22,42 +22,13 @@ class AwarenessPlanMetricsViewSet(LoggingMixin, ViewSet):
         return AwarenessPlanMetrics.objects.all()
     
     def list(self, request, *args, **kwargs):
-        product, city, brand = request.query_params.get("product"), request.query_params.get("city"), request.query_params.get("brand")
-        filters = []
-        if product:
-            filters.append(Q(awarenessplan__product__name__icontains=product))
-        if city:
-            filters.append(Q(awarenessplan__city__icontains=city))
-        if brand:
-            filters.append(Q(awarenessplan__brand__brand__id=brand))
         data = self.get_queryset()
-        if product or city or brand:
-            item = AwarenessPlanMetrics.objects.filter(*filters)
-            data = [obj for obj in item]
         serializer =  AwarenessPlanMetricsListSerializer(data, many=True).data
         data = []
         response = {
             'message': 'success',
-        }
-        if serializer:
-            response = {
-                'theme': serializer[0]['awarenessplan']['theme'],
-                'communication': serializer[0]['awarenessplan']['communication'],
-                'medium': serializer[0]['awarenessplan']['medium'],
-                'city': serializer[0]['awarenessplan']['city'],
-                'product': serializer[0]['awarenessplan']['product']['name'],
-                'target_audience': serializer[0]['awarenessplan']['target_audience'],
-                'brand': serializer[0]['awarenessplan']['brand'],
-            }
-        for i in serializer:
-            data.append({
-                'id': i['id'],
-                'name': i['name'],
-                'proposed': i['proposed'],
-                'impacted': i['impacted']
-            })
-        response['data'] = data
-            
+            'data': serializer.data
+        }   
         return Response(response, status=status.HTTP_200_OK)
     
     def retrieve(self, *args, **kwargs):
