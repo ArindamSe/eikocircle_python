@@ -5,27 +5,29 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework_tracking.mixins import LoggingMixin
 
-from repair_shop.models import RepairShop, RepairShopRecord, RepairShopItemPics
-from repair_shop.serializers import RepairShopRecordSerializer, RepairShopSerializer, RepairShopRecordListSerializer
+from repair_shop.models import RepairShop, RepairShopPics
+from repair_shop.serializers import RepairShopSerializer, RepairShopListSerializer
 
+    
 class RepairShopViewSet(LoggingMixin, ViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = RepairShopSerializer
     
     @staticmethod
     def get_object(pk):
-        return get_object_or_404(RepairShop)
+        return get_object_or_404(RepairShop, pk=pk)
     
     @staticmethod
-    def get_queryset(self):
+    def get_queryset():
         return RepairShop.objects.all()
     
     def list(self, request, *args, **kwargs):
-        data =  self.get_queryset()
-        serializer = self.serializer_class(data, many=True)
+        data = self.get_queryset()
+        
+        serializer = RepairShopListSerializer(data, many=True).data
+        
         response = {
-            'message': "All Repair shops are listed",
-            'data': serializer.data
+            'data': serializer,
         }
         
         return Response(response, status=status.HTTP_200_OK)
@@ -33,29 +35,39 @@ class RepairShopViewSet(LoggingMixin, ViewSet):
     def retrieve(self, *args, **kwargs):
         pk = kwargs.pop('pk')
         instance = self.get_object(pk)
-        serializer = self.serializer_class(instance)
+        serializer = RepairShopListSerializer(instance)
+        
         response = {
-            'data': serializer.data
+            'data': serializer.data,
         }
         
         return Response(response, status=status.HTTP_200_OK)
     
     def create(self, request):
         data = {
-            'name': request.data.get('name'),
-            'address': request.data.get('address'),
-            'number': request.data.get('number'),
-            'city': request.data.get('city'),
+            'brand': request.data.get('brand'),
+            'product': request.data.get('product'),
+            'product_status': request.data.get('product_status'),
+            'reusable': request.data.get('reusable'),
+            'form': request.data.get('form'),
+            'discard_item_status': request.data.get('discard_item_status'),
+            'price': request.data.get('price'),
             'created_by': self.request.user.id,
         }
         
-        data = self.serializer_class(data=data)
+        pictures = request.FILES.getlist('pictures')
+        
+        context = {
+            'pictures': pictures,
+        }
+        
+        data = self.serializer_class(data=data, context=context)
         data.is_valid(raise_exception=True)
         data.save()
         
         response = {
-            "message": "Successfully created Repair Shop",
-            'data': data,
+            "message": "Successfully created",
+            "data": data.data,
         }
         
         return Response(response, status=status.HTTP_201_CREATED)
@@ -64,52 +76,73 @@ class RepairShopViewSet(LoggingMixin, ViewSet):
         instance = self.get_object(kwargs.pop('pk'))
         
         data = {
-            'name': request.data.get('name', instance.name),
-            'address': request.data.get('address', instance.address),
-            'number': request.data.get('number', instance.number),
-            'city': request.data.get('city', instance.city),
+            'brand': request.data.get('brand', instance.brand),
+            'product': request.data.get('product', instance.product),
+            'product_status': request.data.get('product_status', instance.product_status),
+            'reusable': request.data.get('reusable', instance.reusable),
+            'form': request.data.get('form', instance.form),
+            'discard_item_status': request.data.get('discard_item_status', instance.discard_item_status),
+            'price': request.data.get('price', instance.price),
             'updated_by': self.request.user.id,
         }
         
-        data = self.serializer_class(data=data, instance=instance)
-        data.is_valid(raise_exception=True)
-        data.save()
-
-        response = {
-            "message": "Successfully updated",
-            "data": data.data
+        pictures = request.FILES.getlist("pictures")
+        
+        context = {
+            'pictures': pictures,
         }
         
-        return Response(response, status=status.HTTP_200_OK)
+        data = self.serializer_class(data=data, instance=instance, context=context)
+        data.is_valid(raise_exception=True)
+        data.save()
         
+        response = {
+            "message": "Successfully updated",
+            "data": data.data,
+        }
+        
+        return Response(response, status=status.HTTP_201_CREATED)
+    
     def partial_update(self, request, *args, **kwargs):
         instance = self.get_object(kwargs.pop('pk'))
         
         data = {
-            'name': request.data.get('name', instance.name),
-            'address': request.data.get('address', instance.address),
-            'number': request.data.get('number', instance.number),
-            'city': request.data.get('city', instance.city),
+            'brand': request.data.get('brand', instance.brand),
+            'product': request.data.get('product', instance.product),
+            'product_status': request.data.get('product_status', instance.product_status),
+            'reusable': request.data.get('reusable', instance.reusable),
+            'form': request.data.get('form', instance.form),
+            'discard_item_status': request.data.get('discard_item_status', instance.discard_item_status),
+            'price': request.data.get('price', instance.price),
             'updated_by': self.request.user.id,
         }
         
-        data = self.serializer_class(data=data, instance=instance, partial=True)
-        data.is_valid(raise_exception=True)
-        data.save()
-
-        response = {
-            "message": "Successfully updated",
-            "data": data.data
+        pictures = request.FILES.getlist("pictures")
+        
+        context = {
+            'pictures': pictures,
         }
         
-        return Response(response, status=status.HTTP_200_OK)
+        data = self.serializer_class(data=data, instance=instance, context=context, partial=True)
+        data.is_valid(raise_exception=True)
+        data.save()
+        
+        response = {
+            "message": "Successfully updated",
+            "data": data.data,
+        }
+        
+        return Response(response, status=status.HTTP_201_CREATED)
     
     def destroy(self, request, *args, **kwargs):
         id=kwargs.pop('pk')
         instance = self.get_object(id)
+        RepairShopPics.objects.filter(shop__id=id).delete()
         instance.delete()
+        
         response = {
-            'message': "Successfully deleted",
+            'message': "Successfully Deleted",
         }
         
         return Response(response, status=status.HTTP_204_NO_CONTENT)
+    

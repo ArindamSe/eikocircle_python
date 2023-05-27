@@ -9,7 +9,6 @@ from rest_framework_tracking.mixins import LoggingMixin
 from Item_collected.models import ItemCollected, ItemCollectedPictures
 from Item_collected.serializers import ItemCollectedSerializer, ItemCollectedListSerializer
 
-
 class ItemCollectedViewSet(LoggingMixin, ViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = ItemCollectedSerializer

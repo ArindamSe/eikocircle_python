@@ -5,18 +5,6 @@ from authentication.models import Brands
 from product.models import Product
 
 class RepairShop(Common):
-    name = models.CharField(max_length=100)
-    address = models.TextField(null=True, blank=True)
-    number = models.CharField(max_length=10, null=True, blank=True)
-    city = models.CharField(max_length=30, null=True, blank=True)
-    
-    class Meta:
-        db_table = "Repair Shop"
-        
-    def __str__(self):
-        return f'{self.name}-{self.city}'
-
-class RepairShopRecord(Common):
     Product_Status = (
         ('reusable', 'Reusable'),
         ('to_be_discarded', 'To Be Discarded')
@@ -28,7 +16,6 @@ class RepairShopRecord(Common):
         ('still_in_shop', 'Still in Shop')
     )
     
-    shop = models.ForeignKey(RepairShop, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brands, on_delete=models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_status = models.CharField(max_length=100, choices=Product_Status, default='reusable')
@@ -38,17 +25,17 @@ class RepairShopRecord(Common):
     price = models.IntegerField(null=True, blank=True)
     
     class Meta:
-        db_table = "Repair Shop Record"
+        db_table = "Repair Shop"
         
     def __str__(self):
         return f"{self.product}-{self.product_status}"
     
-class RepairShopItemPics(Common):
-    record_item = models.ForeignKey(RepairShopRecord, on_delete=models.CASCADE)
+class RepairShopPics(Common):
+    shop = models.ForeignKey(RepairShop, on_delete=models.CASCADE)
     pics = models.FileField(upload_to='media/repairshop/pics')
     
     class Meta:
-        db_table = "Repair Shop Item Pics"
+        db_table = "Repair Shop Pics"
         
     def __str__(self):
         return f'{self.record_item.product}-{self.pics}'

@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from repair_shop.models import RepairShop, RepairShopPics
+
+admin.site.register(RepairShop)
+admin.site.register(RepairShopPics)
