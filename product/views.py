@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework_tracking.mixins import LoggingMixin
 
+
 from product.models import Product
 from product.serializers import ProductSerialzer, ProductSerialzerView
 
@@ -104,6 +105,6 @@ class ProductViewSet(LoggingMixin, ViewSet):
         item.delete()
         response= {
             'data': '',
-            'message': f"Successfully deleted Product name {item_name}"
+            'message': f"Successfully deleted Product"
         }
         return Response(response, status=status.HTTP_204_NO_CONTENT)

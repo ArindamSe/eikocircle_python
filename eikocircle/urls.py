@@ -31,3 +31,4 @@ urlpatterns = [
     path('awareness-plan-metrics/', include('awareness_plan_metrics.urls')),
     path('repair-shop/', include('repair_shop.urls')),
 ]
+

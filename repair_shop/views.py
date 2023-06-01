@@ -18,11 +18,11 @@ class RepairShopViewSet(LoggingMixin, ViewSet):
         return get_object_or_404(RepairShop, pk=pk)
     
     @staticmethod
-    def get_queryset(user):
-        return RepairShop.objects.filter(created_by=user)
+    def get_queryset():
+        return RepairShop.objects.filter()
     
     def list(self, request, *args, **kwargs):
-        data = self.get_queryset(self.request.user.id)
+        data = self.get_queryset().filter(created_by=self.request.user.id)
         
         serializer = RepairShopListSerializer(data, many=True).data
         
