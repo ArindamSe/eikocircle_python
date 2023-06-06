@@ -48,12 +48,12 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
                 'medium': i['medium'],
                 'city': i['city'],
                 'date': i['date'],
+                'price': i['price'],
                 'communication': i['communication'],
                 'target_audience': i['target_audience'],
                 'brand': i['brand'],
                 'pics': i['pics'],
                 'metrics': i['metrics'],
-                'price': i['price'],
             })
         
         return Response(response, status=status.HTTP_200_OK)
@@ -67,6 +67,7 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
                 'medium': serializer['medium'],
                 'city': serializer['city'],
                 'date': serializer['date'],
+                'price': serializer['price'],
                 'communication': serializer['communication'],
                 'target_audience': serializer['target_audience'],
                 'brand': serializer['brand'],

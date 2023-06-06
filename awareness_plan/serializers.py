@@ -26,12 +26,12 @@ class AwarenessPlanListSerializer(serializers.ModelSerializer):
         return AwarenessPlanMetricsListSerializer(data, many=True).data
     class Meta:
         model = AwarenessPlan
-        fields = ['id', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience', 'brand', 'pics', 'metrics']
+        fields = ['id', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience', 'brand', 'pics', 'metrics', 'price']
         
 class AwarenessPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = AwarenessPlan
-        fields = ['id', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience', 'brand', 'created_by', 'updated_by']
+        fields = ['id', 'theme', 'medium', 'city', 'date', 'communication', 'target_audience', 'brand', 'price', 'created_by', 'updated_by']
         
         extra_kwargs = {
             'created_by': {'write_only': True},
