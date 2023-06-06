@@ -23,10 +23,8 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
         return AwarenessPlan.objects.all()
     
     def list(self, request, *args, **kwargs):
-        product, city, period, brand = request.query_params.get("product"), request.query_params.get('city'), request.query_params.get('period'), request.query_params.get('brand')
+        city, period, brand = request.query_params.get('city'), request.query_params.get('period'), request.query_params.get('brand')
         filters = []
-        if product:
-            filters.append(Q(product__name__icontains=product))
         if city:
             filters.append(Q(city__icontains=city))
         if brand:
@@ -35,7 +33,7 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
             date = datetime.now() -  timedelta(days=int(period))
             filters.append(Q(created_at__gte=date))
         data = self.get_queryset()
-        if city or brand or period or product:
+        if city or brand or period:
             item = AwarenessPlan.objects.filter(*filters)
             data = [obj for obj in item]
         serializer = AwarenessPlanListSerializer(data, many=True).data
