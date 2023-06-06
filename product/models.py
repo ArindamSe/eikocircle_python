@@ -5,7 +5,7 @@ from Item.models import Item
 
 class Product(Common):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     
     class Meta:
         db_table = "Product Category"

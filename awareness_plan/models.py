@@ -4,8 +4,7 @@ from django.core.exceptions import ValidationError
 from multiselectfield import MultiSelectField
 
 from Common.models import Common
-from product.models import Product
-from brand_product.models import Brand_product
+from authentication.models import Brands
 
 def validate_medium_count(value):
     max_choices = 8
@@ -23,20 +22,20 @@ class AwarenessPlan(Common):
         ('rwas', 'RWAs')
     )
     
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    theme = models.CharField(max_length=200, null=True, blank=True)
+    theme = models.CharField(max_length=300, null=True, blank=True)
     medium = MultiSelectField(choices=Medium, validators=[validate_medium_count], default=["online_campaigns"])
-    city = models.CharField(max_length=30, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateField(null=True, blank=True)
+    price = models.CharField(max_length=100, null=True, blank=True)
     communication = models.TextField(null=True, blank=True)
     target_audience = models.IntegerField(null=True, blank=True)
-    brand = models.ForeignKey(Brand_product, null=True, blank=True, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brands, null=True, blank=True, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "Awareness Plan"
         
     def __str__(self):
-        return f"{self.product}-{self.theme}-{self.city}-{self.date}"
+        return f"{self.theme}-{self.city}-{self.date}"
     
 class AwarenessPlanPics(Common):
     awarenessplan = models.ForeignKey(AwarenessPlan, on_delete=models.CASCADE)

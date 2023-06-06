@@ -30,7 +30,7 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
         if city:
             filters.append(Q(city__icontains=city))
         if brand:
-            filters.append(Q(brand__brand__id=brand))
+            filters.append(Q(brand__id=brand))
         if period:
             date = datetime.now() -  timedelta(days=int(period))
             filters.append(Q(created_at__gte=date))
@@ -52,7 +52,8 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
                 'target_audience': i['target_audience'],
                 'brand': i['brand'],
                 'pics': i['pics'],
-                'metrics': i['metrics']
+                'metrics': i['metrics'],
+                'price': i['price'],
             })
         
         return Response(response, status=status.HTTP_200_OK)
@@ -70,20 +71,21 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
                 'target_audience': serializer['target_audience'],
                 'brand': serializer['brand'],
                 'pics': serializer['pics'],
-                'metrics': serializer['metrics']
+                'metrics': serializer['metrics'],
+                'price': serializer['price'],
         }
 
         return Response(response, status=status.HTTP_200_OK)
     
     def create(self, request):
         data = {
-            'product': request.data.get('product'),
             'theme': request.data.get('theme'),
             'medium': request.data.get('medium'),
             'brand': request.data.get('brand'),
             'city': request.data.get('city'),
             'communication': request.data.get('communication'),
             'target_audience': request.data.get('target_audience'),
+            'price': request.data.get['price'],
             'created_by': request.user.id,
         }
         
@@ -108,7 +110,6 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
         instance = self.get_object(kwargs.pop('pk'))
         
         data = {
-            'product': request.data.get('product', instance.product),
             'theme': request.data.get('theme', instance.theme),
             'medium': request.data.get('medium', instance.medium),
             'city': request.data.get('city', instance.city),
@@ -117,6 +118,7 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
             'target_audience': request.data.get('target_audience', instance.target_audience),
             'pics': request.data.get('pics', instance.pics),
             'metrics': request.data.get('metrics', instance.metrics),
+            'price': request.data.get('price'),
             'created_by': request.user.id,
         }
         
@@ -141,7 +143,6 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
         instance = self.get_object(kwargs.pop('pk'))
         
         data = {
-            'product': request.data.get('product', instance.product),
             'theme': request.data.get('theme', instance.theme),
             'medium': request.data.get('medium', instance.medium),
             'city': request.data.get('city', instance.city),
@@ -149,6 +150,7 @@ class AwarenessPlanViewSet(LoggingMixin, ViewSet):
             'communication': request.data.get('communication', instance.communication),
             'target_audience': request.data.get('target_audience', instance.target_audience),
             'pics': request.data.get('pics', instance.pics),
+            'price': request.data.get('price', instance.price),
             'created_by': request.user.id,
         }
         
