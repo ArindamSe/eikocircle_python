@@ -40,6 +40,7 @@ class ItemCollectedViewSet(LoggingMixin, ViewSet):
     
     def create(self, request):
         data = {
+            'collectioncenter': request.data.get('collectioncenter'),
             'product': request.data.get('product'),
             'weight': request.data.get('weight'),
             'brand': request.data.get('brand'),
@@ -67,6 +68,7 @@ class ItemCollectedViewSet(LoggingMixin, ViewSet):
     def update(self, request, *args, **kwargs):
         itemcollected = self.get_object(kwargs.pop('pk'))
         data = {
+            'collectioncenter': request.data.get('collectioncenter', itemcollected.collectioncenter),
             'product': request.data.get('product', itemcollected.product),
             'weight': request.data.get('weight', itemcollected.weight),
             'brand': request.data.get('brand', itemcollected.brand),
@@ -94,6 +96,7 @@ class ItemCollectedViewSet(LoggingMixin, ViewSet):
     def partial_update(self, request, *args, **kwargs):
         itemcollected = self.get_object(kwargs.pop('pk'))
         data = {
+            'collectioncenter': request.data.get('collectioncenter', itemcollected.collectioncenter),
             'product': request.data.get('product', itemcollected.product),
             'weight': request.data.get('weight', itemcollected.weight),
             'brand': request.data.get('brand', itemcollected.brand),

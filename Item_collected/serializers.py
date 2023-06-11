@@ -14,12 +14,13 @@ class ItemCollectedListSerializer(serializers.ModelSerializer):
         return ItemCollectedPictiresSerializer(data, many=True).data
     class Meta:
         model = ItemCollected
-        fields = ['id', 'product', 'weight', 'brand', 'target', 'picture']
+        fields = ['id', 'collectioncenter', 'product', 'weight', 'brand', 'target', 'picture']
+        depth=1
         
 class ItemCollectedSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemCollected
-        fields = ['id', 'product', 'weight', 'brand', 'target', 'created_by', 'updated_by']
+        fields = ['id', 'collectioncenter', 'product', 'weight', 'brand', 'target', 'created_by', 'updated_by']
         
         extra_kwargs = {
             'created_by': {'write_only': True},

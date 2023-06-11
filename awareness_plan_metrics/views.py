@@ -27,7 +27,7 @@ class AwarenessPlanMetricsViewSet(LoggingMixin, ViewSet):
         data = []
         response = {
             'message': 'success',
-            'data': serializer.data
+            'data': serializer
         }   
         return Response(response, status=status.HTTP_200_OK)
     
@@ -43,8 +43,11 @@ class AwarenessPlanMetricsViewSet(LoggingMixin, ViewSet):
         data = {
             'awarenessplan': request.data.get('awarenessplan'),
             'name': request.data.get('name'),
-            'proposed': request.data.get('proposed'),
-            'impacted': request.data.get('impacted'),
+            'number_of_themes': request.data.get('number_of_themes'),
+            'number_of_life_touched': request.data.get('number_of_life_touched'),
+            'total_duration': request.data.get('total_duration'),
+            'targeted_demographics': request.data.get('targeted_demographics'),
+            'targeted_interest': request.data.get('targeted_interest'),
             'created_by': request.user.id,
         }
         
@@ -65,8 +68,11 @@ class AwarenessPlanMetricsViewSet(LoggingMixin, ViewSet):
         data = {
             'awarenessplan': request.data.get('awarenessplan', instance.awarenessplan),
             'name': request.data.get('name', instance.name),
-            'proposed': request.data.get('proposed', instance.proposed),
-            'impacted': request.data.get('impacted', instance.impacted),
+            'number_of_themes': request.data.get('number_of_themes', instance.number_of_themes),
+            'number_of_life_touched': request.data.get('number_of_life_touched', instance.number_of_life_touched),
+            'total_duration': request.data.get('total_duration', instance.total_duration),
+            'targeted_demographics': request.data.get('targeted_demographics', instance.targeted_demographics),
+            'targeted_interest': request.data.get('targeted_interest', instance.targeted_interest),
             'updated_by': request.user.id,
         }
         
@@ -87,8 +93,11 @@ class AwarenessPlanMetricsViewSet(LoggingMixin, ViewSet):
         data = {
             'awarenessplan': request.data.get('awarenessplan', instance.awarenessplan),
             'name': request.data.get('name', instance.name),
-            'proposed': request.data.get('proposed', instance.proposed),
-            'impacted': request.data.get('impacted', instance.impacted),
+            'number_of_themes': request.data.get('number_of_themes', instance.number_of_themes),
+            'number_of_life_touched': request.data.get('number_of_life_touched', instance.number_of_life_touched),
+            'total_duration': request.data.get('total_duration', instance.total_duration),
+            'targeted_demographics': request.data.get('targeted_demographics', instance.targeted_demographics),
+            'targeted_interest': request.data.get('targeted_interest', instance.targeted_interest),
             'updated_by': request.user.id,
         }
         

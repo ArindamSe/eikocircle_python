@@ -2,11 +2,13 @@ from django.db import models
 
 from Common.models import Common
 from product.models import Product
-from brand_product.models import Brand_product
+from authentication.models import Brands
+from collection_center.models import CollectionCenter
 
 class ItemCollected(Common):
+    collectioncenter = models.ForeignKey(CollectionCenter, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    brand = models.ForeignKey(Brand_product, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brands, on_delete=models.CASCADE)
     target = models.IntegerField(null=True, blank=True)
     weight = models.IntegerField(null=True, blank=True)
     

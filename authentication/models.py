@@ -30,6 +30,8 @@ class User(AbstractUser, Common):
     address = models.CharField(max_length=250, blank=True, null=True)
     mobile = models.CharField(max_length=10, blank=True, null=True)
     
+    is_customer = models.BooleanField(default=False)
+    
     class Meta:
         db_table = "Users"
         verbose_name = "User"

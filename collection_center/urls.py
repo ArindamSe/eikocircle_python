@@ -1,11 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from collection_center.views import CollectionCenterViewSet, CollectedCenterItemCollectedViewSet
+from collection_center.views import CollectionCenterViewSet
 
 router = DefaultRouter()
-router.register('center', CollectionCenterViewSet, basename='collection-center')
-router.register('item', CollectedCenterItemCollectedViewSet, basename='collected-center-item')
+router.register('', CollectionCenterViewSet, basename='collection-center')
 
 urlpatterns = [
     path('', include(router.urls))
