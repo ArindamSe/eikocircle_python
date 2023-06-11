@@ -33,7 +33,7 @@ class ItemCollectedViewSet(LoggingMixin, ViewSet):
     def retrieve(self, *args, **kwargs):
         pk = kwargs.pop('pk')
         response = {
-            'data': self.serializer_class(self.get_object(pk)).data
+            'data': ItemCollectedListSerializer(self.get_object(pk)).data
         }
         
         return Response(response, status=status.HTTP_200_OK)
