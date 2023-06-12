@@ -2,7 +2,7 @@ from django.db import models
 
 from Common.models import Common
 from product.models import Product
-from brand_product.models import Brand_product
+from authentication.models import Brands
 
 class RecyclingCenter(Common):
     name = models.CharField(max_length=100)
@@ -18,7 +18,7 @@ class RecyclingCenter(Common):
     
 class ItemRecycled(Common):
     recyclingcenter = models.ForeignKey(RecyclingCenter, on_delete=models.CASCADE)
-    brand = models.ForeignKey(Brand_product, on_delete=models.CASCADE, null=True, blank=True)
+    brand = models.ForeignKey(Brands, on_delete=models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     target = models.IntegerField(null=True, blank=True)
     recycled = models.IntegerField(null=True, blank=True)

@@ -130,7 +130,7 @@ class ItemRecycledViewSet(LoggingMixin, ViewSet):
         if city:
             filters.append(Q(recyclingcenter__city__icontains=city))
         if brand:
-            filters.append(Q(brand__brand__id=brand))
+            filters.append(Q(brand__id=brand))
         if period:
             date = datetime.now() - timedelta(days=int(period))
             filters.append(Q(created_at__gte=date))
